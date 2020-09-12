@@ -7,12 +7,12 @@ public class DisplayManager
 {
     private static int FPS_CAP = 0;
 
-    public static void SetFPS(final int fpsCap)
+    public static void setFPS(final int fpsCap)
     {
         FPS_CAP = fpsCap;
     }
 
-    public static void CreateDisplay(final int width, final int height, final String title)
+    public static void createDisplay(final int width, final int height, final String title)
     {
         ContextAttribs attribs = new ContextAttribs(3, 2);
         attribs.withForwardCompatible(true);
@@ -32,7 +32,7 @@ public class DisplayManager
         GL11.glViewport(0, 0, width, height);
     }
 
-    public static void UpdateDisplay()
+    public static void updateDisplay()
     {
         switch (FPS_CAP)
         {
@@ -46,7 +46,7 @@ public class DisplayManager
         Display.update();
     }
 
-    public static void CloseDisplay()
+    public static void closeDisplay()
     {
         Display.destroy();
     }

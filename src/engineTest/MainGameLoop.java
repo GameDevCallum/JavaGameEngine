@@ -18,8 +18,8 @@ public class MainGameLoop implements Runnable
 
     @Override
     public void run() {
-        DisplayManager.CreateDisplay(1280, 720, "Main Game");
-        DisplayManager.SetFPS(30);
+        DisplayManager.createDisplay(1280, 720, "Main Game");
+        DisplayManager.setFPS(30);
 
         Loader loader = new Loader();
 
@@ -28,15 +28,18 @@ public class MainGameLoop implements Runnable
         float[] vertices = {
                 -0.5f, 0.5f, 0f,
                 -0.5f, -0.5f, 0f,
-                0.5f, -0.5f, 0,
-
                 0.5f, -0.5f, 0f,
-                0.5f, 0.5f, 0f,
-                -0.5f, 0.5f, 0f
-
+                0.5f, 0.5f, 0f
         };
 
-        RawModel model = loader.loadToAVO(vertices);
+        int[] indices = {
+                0, 1, 3,
+                3, 1, 2
+        };
+
+
+
+        RawModel model = loader.loadToAVO(vertices, indices);
 
         while (!Display.isCloseRequested())
         {
@@ -44,11 +47,11 @@ public class MainGameLoop implements Runnable
 
             renderer.render(model);
 
-            DisplayManager.UpdateDisplay();
+            DisplayManager.updateDisplay();
         }
 
         loader.cleanUp();
-        DisplayManager.CloseDisplay();
+        DisplayManager.closeDisplay();
     }
 
     public static void main(String[] args)
