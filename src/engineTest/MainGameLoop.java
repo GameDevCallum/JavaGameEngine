@@ -6,10 +6,18 @@ import renderEngine.Loader;
 import renderEngine.RawModel;
 import renderEngine.Renderer;
 
-public class MainGameLoop
+public class MainGameLoop implements Runnable
 {
-    public static void main(String[] args)
+    private Thread thread;
+
+    public void start()
     {
+        thread = new Thread(this, "MainThread");
+        thread.start();
+    }
+
+    @Override
+    public void run() {
         DisplayManager.CreateDisplay(1280, 720, "Main Game");
         DisplayManager.SetFPS(30);
 
@@ -41,5 +49,10 @@ public class MainGameLoop
 
         loader.cleanUp();
         DisplayManager.CloseDisplay();
+    }
+
+    public static void main(String[] args)
+    {
+        new MainGameLoop().start();
     }
 }
