@@ -8,7 +8,8 @@ public class Renderer
 {
     public void prepare()
     {
-        GL11.glClearColor(1, 0, 0, 1);
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        GL11.glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
     }
 
     public void render(RawModel model)
