@@ -5,6 +5,7 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.RawModel;
 import renderEngine.Renderer;
+import shaders.StaticShader;
 
 public class MainGameLoop implements Runnable
 {
@@ -22,8 +23,8 @@ public class MainGameLoop implements Runnable
         DisplayManager.setFPS(30);
 
         Loader loader = new Loader();
-
         Renderer renderer = new Renderer();
+        StaticShader shader = new StaticShader();
 
         float[] vertices = {
                 -0.5f, 0.5f, 0f,
@@ -45,11 +46,15 @@ public class MainGameLoop implements Runnable
         {
             renderer.prepare();
 
+            shader.start(); // Start shader before rendering
+
             renderer.render(model);
 
+            shader.start(); // Stop shader after rendering
             DisplayManager.updateDisplay();
         }
 
+        shader.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
