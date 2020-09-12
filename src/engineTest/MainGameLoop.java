@@ -1,11 +1,13 @@
 package engineTest;
 
+import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.RawModel;
+import models.RawModel;
 import renderEngine.Renderer;
 import shaders.StaticShader;
+import textures.ModelTexture;
 
 public class MainGameLoop implements Runnable
 {
@@ -38,9 +40,18 @@ public class MainGameLoop implements Runnable
                 3, 1, 2
         };
 
+        float[] textureCoords = {
+                0, 0,
+                0, 1,
+                1, 1,
+                1, 0
+        };
 
 
-        RawModel model = loader.loadToAVO(vertices, indices);
+
+        RawModel model = loader.loadToAVO(vertices, textureCoords, indices);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
+        TexturedModel texturedModel = new TexturedModel(model, texture);
 
         while (!Display.isCloseRequested())
         {
@@ -48,7 +59,7 @@ public class MainGameLoop implements Runnable
 
             shader.start(); // Start shader before rendering
 
-            renderer.render(model);
+            renderer.render(texturedModel);
 
             shader.start(); // Stop shader after rendering
             DisplayManager.updateDisplay();

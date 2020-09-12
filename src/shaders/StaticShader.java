@@ -13,5 +13,6 @@ public class StaticShader extends ShaderProgram
     @Override
     protected void bindAttributes() {
         super.bindAttributes(0, "pos");
+        super.bindAttributes(1, "textureCoords"); // FOR IMAGE SHADER ONLY
     }
 }
