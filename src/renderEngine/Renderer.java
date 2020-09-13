@@ -9,14 +9,12 @@ import org.lwjgl.opengl.GL30;
 
 public class Renderer
 {
-    public void prepare()
-    {
+    public void prepare() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
     }
 
-    public void renderRawModel(RawModel model)
-    {
+    public void renderRawModel(RawModel model) {
         GL30.glBindVertexArray(model.getVaoID());
         GL20.glEnableVertexAttribArray(0);
         GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
@@ -25,8 +23,7 @@ public class Renderer
         GL30.glBindVertexArray(0);
     }
 
-    public void render(TexturedModel texturedModel)
-    {
+    public void render(TexturedModel texturedModel) {
         GL30.glBindVertexArray(texturedModel.getRawModel().getVaoID());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1); // FOR IMAGE SHADER ONLY

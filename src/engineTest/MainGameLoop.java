@@ -11,12 +11,10 @@ import textures.ModelTexture;
 
 public class MainGameLoop implements Runnable
 {
-    private Thread thread;
 
-    public void start()
-    {
-        thread = new Thread(this, "MainThread");
-        thread.start();
+    public void start() {
+        Thread gameThread = new Thread(this, "MainThread");
+        gameThread.start();
     }
 
     @Override
@@ -53,8 +51,7 @@ public class MainGameLoop implements Runnable
         ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
 
-        while (!Display.isCloseRequested())
-        {
+        while (!Display.isCloseRequested()) {
             renderer.prepare();
 
             shader.start(); // Start shader before rendering
@@ -70,8 +67,7 @@ public class MainGameLoop implements Runnable
         DisplayManager.closeDisplay();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new MainGameLoop().start();
     }
 }

@@ -7,33 +7,28 @@ public class DisplayManager
 {
     private static int FPS_CAP = 0;
 
-    public static void setFPS(final int fpsCap)
-    {
+    public static void setFPS(final int fpsCap) {
         FPS_CAP = fpsCap;
     }
 
-    public static void createDisplay(final int width, final int height, final String title)
-    {
+    public static void createDisplay(final int width, final int height, final String title) {
         ContextAttribs attribs = new ContextAttribs(3, 2);
         attribs.withForwardCompatible(true);
         attribs.withProfileCore(true);
 
-        try
-        {
+        try {
             Display.setDisplayMode(new DisplayMode(width, height));
             Display.create(new PixelFormat(), attribs);
             Display.setTitle(title);
         }
-        catch (LWJGLException e)
-        {
+        catch (LWJGLException e) {
             e.printStackTrace();
         }
 
         GL11.glViewport(0, 0, width, height);
     }
 
-    public static void updateDisplay()
-    {
+    public static void updateDisplay() {
         switch (FPS_CAP)
         {
             case 0:
@@ -46,8 +41,7 @@ public class DisplayManager
         Display.update();
     }
 
-    public static void closeDisplay()
-    {
+    public static void closeDisplay() {
         Display.destroy();
     }
 }

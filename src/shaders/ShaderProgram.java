@@ -14,8 +14,7 @@ public abstract class ShaderProgram
     private int vertexShaderID;
     private int fragmentShaderID;
 
-    public ShaderProgram(String vertexFile, String fragmentFile)
-    {
+    public ShaderProgram(String vertexFile, String fragmentFile) {
         vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
         fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
         programID = GL20.glCreateProgram();
@@ -26,18 +25,15 @@ public abstract class ShaderProgram
         bindAttributes();
     }
 
-    public void start()
-    {
+    public void start() {
         GL20.glUseProgram(programID);
     }
 
-    public void stop()
-    {
+    public void stop() {
         GL20.glUseProgram(0);
     }
 
-    public void cleanUp()
-    {
+    public void cleanUp() {
         start();
         GL20.glDetachShader(programID, vertexShaderID);
         GL20.glDetachShader(programID, fragmentShaderID);
@@ -48,17 +44,14 @@ public abstract class ShaderProgram
 
     protected abstract void bindAttributes();
 
-    protected void bindAttributes(int attribute, String varName)
-    {
+    protected void bindAttributes(int attribute, String varName) {
         GL20.glBindAttribLocation(programID, attribute, varName);
     }
 
-    private static int loadShader(String file, int type)
-    {
+    private static int loadShader(String file, int type) {
         StringBuilder shaderSource = new StringBuilder();
 
-        try
-        {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null)
@@ -68,8 +61,7 @@ public abstract class ShaderProgram
 
             reader.close();
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             System.err.println("Could not read file..");
             e.printStackTrace();
             System.exit(-1);
