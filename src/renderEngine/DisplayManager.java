@@ -12,9 +12,9 @@ public class DisplayManager
     }
 
     public static void createDisplay(final int width, final int height, final String title) {
-        ContextAttribs attribs = new ContextAttribs(3, 2);
-        attribs.withForwardCompatible(true);
-        attribs.withProfileCore(true);
+        ContextAttribs attribs = new ContextAttribs(3, 2)
+        .withForwardCompatible(true)
+        .withProfileCore(true);
 
         try {
             Display.setDisplayMode(new DisplayMode(width, height));
@@ -29,13 +29,14 @@ public class DisplayManager
     }
 
     public static void updateDisplay() {
-        switch (FPS_CAP)
-        {
-            case 0:
-                Display.sync(30);
 
-            default:
-                Display.sync(FPS_CAP);
+        if (FPS_CAP == 0)
+        {
+            Display.sync(30);
+        }
+        else
+        {
+            Display.sync(FPS_CAP);
         }
 
         Display.update();

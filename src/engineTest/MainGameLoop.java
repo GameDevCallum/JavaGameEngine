@@ -1,13 +1,27 @@
 package engineTest;
 
+import entities.Entity;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import models.RawModel;
 import renderEngine.Renderer;
 import shaders.StaticShader;
 import textures.ModelTexture;
+
+
+/*
+
+        VIDEO: https://youtu.be/50Y9u7K0PZo?list=PLRIWtICgwaX0u7Rf9zkZhLoLuZVfUksDP&t=417
+
+* */
+
+
+
+
+
 
 public class MainGameLoop implements Runnable
 {
@@ -50,13 +64,17 @@ public class MainGameLoop implements Runnable
         RawModel model = loader.loadToAVO(vertices, textureCoords, indices);
         ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
+        Entity entity = new Entity(texturedModel, new Vector3f(-1, 0, 0), 0, 0, 0, 1);
 
         while (!Display.isCloseRequested()) {
+            entity.increasePosition(0.005f, 0, 0); // Changes position
+            entity.increaseRotation(0, 1, 0); // Changes rotation
+
             renderer.prepare();
 
             shader.start(); // Start shader before rendering
 
-            renderer.render(texturedModel);
+            renderer.render(entity, shader);
 
             shader.start(); // Stop shader after rendering
             DisplayManager.updateDisplay();
