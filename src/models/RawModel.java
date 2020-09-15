@@ -1,7 +1,6 @@
 package models;
 
-public class RawModel
-{
+public class RawModel {
     private final int vaoID;
     private final int vertexCount;
 

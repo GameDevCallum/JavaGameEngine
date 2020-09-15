@@ -40,9 +40,15 @@ public class Loader
             e.printStackTrace();
         }
 
-        int textureID = texture.getTextureID();
-        textures.add(textureID);
-        return textureID;
+        if (texture != null)
+        {
+            int textureID = texture.getTextureID();
+            textures.add(textureID);
+            return textureID;
+
+        }
+
+        return 0;
     }
 
     public void cleanUp() {

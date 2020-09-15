@@ -2,8 +2,7 @@ package models;
 
 import textures.ModelTexture;
 
-public class TexturedModel
-{
+public class TexturedModel {
     private final RawModel rawModel;
     private final ModelTexture texture;
 
