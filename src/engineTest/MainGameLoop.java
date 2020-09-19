@@ -3,16 +3,16 @@ package engineTest;
 import entities.Camera;
 import entities.Entity;
 import models.TexturedModel;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import models.RawModel;
+import renderEngine.OBJLoader;
 import renderEngine.Renderer;
 import shaders.StaticShader;
 import textures.ModelTexture;
-
-import java.util.Calendar;
 
 public class MainGameLoop implements Runnable {
 
@@ -30,58 +30,20 @@ public class MainGameLoop implements Runnable {
         StaticShader shader = new StaticShader();
         Renderer renderer = new Renderer(shader);
 
-        float[] vertices01 = {
-                -0.5f, 0.5f, 0f,
-                -0.5f, -0.5f, 0f,
-                0.5f, -0.5f, 0f,
-                0.5f, 0.5f, 0f
-        };
+        RawModel model = OBJLoader.loadObjModel("TestObject", loader);
 
-        float[] vertices02 = {
-                -0.5f, 0.5f, 0f,
-                -0.5f, -0.5f, 0f,
-                0.5f, -0.5f, 0f,
-                0.5f, 0.5f, 0f
-        };
+        TexturedModel texturedModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("stallTexture")));
 
-        int[] indices01 = {
-                0, 1, 3,
-                3, 1, 2
-        };
-
-        int[] indices02 = {
-                0, 1, 3,
-                3, 1, 2
-        };
-
-        float[] textureCoords01 = {
-                0, 0,
-                0, 1,
-                1, 1,
-                1, 0
-        };
-
-        float[] textureCoords02 = {
-                0, 0,
-                0, 1,
-                1, 1,
-                1, 0
-        };
+        Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -50), 0, 0, 0, 1);
 
 
-
-        ModelTexture texture = new ModelTexture(loader.loadTexture("image"));
-
-        RawModel model01 = loader.loadToAVO(vertices01, textureCoords01, indices01);
-        TexturedModel texturedModel01 = new TexturedModel(model01, texture);
-        Entity entity01 = new Entity(texturedModel01, new Vector3f(0, 0, -1), 0, 0, 0, 1);
 
         Camera camera = new Camera();
 
+        // Run Loop
 
         while (!Display.isCloseRequested()) {
-
-//            entity01.increasePosition(0, 0, -0.1f); // Changes position
+            entity.increaseRotation(0, 1, 0);
 
             camera.move();
 
@@ -90,7 +52,7 @@ public class MainGameLoop implements Runnable {
             shader.start(); // Start shader before rendering
             shader.loadViewMatrix(camera);
 
-            renderer.render(entity01, shader);
+            renderer.render(entity, shader);
 
             shader.start(); // Stop shader after rendering
             DisplayManager.updateDisplay();
